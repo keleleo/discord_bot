@@ -1,7 +1,7 @@
-import { ICommand } from '../../core/models/ICommand';
+import { ICommand } from 'dbc';
 
 export default {
-  name:'welcome',
+  name: 'welcome',
   category: 'test',
   description: `Response {welcome}`,
 

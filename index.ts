@@ -1,7 +1,7 @@
+import { BotController } from 'dbc';
 import { Client, Intents } from 'discord.js';
 import dotenv from 'dotenv';
-import path from 'path'
-import BotController from './core';
+import path from 'path';
 
 dotenv.config();
 
@@ -13,13 +13,16 @@ const client = new Client({
     Intents.FLAGS.GUILD_MEMBERS,
     Intents.FLAGS.DIRECT_MESSAGES,
     Intents.FLAGS.DIRECT_MESSAGE_REACTIONS,
-    Intents.FLAGS.DIRECT_MESSAGE_TYPING
+    Intents.FLAGS.DIRECT_MESSAGE_TYPING,
+    Intents.FLAGS.DIRECT_MESSAGE_TYPING,
   ],
+  partials: ['CHANNEL'],
 });
 
-client.on('ready', (event) => {
+client.on('ready', () => {
   new BotController(client, {
-    comandsDir:path.join(__dirname,'./app/commands'),
+    comandsDir: path.join(__dirname, './app/commands'),
+    featuresDir: path.join(__dirname, './app/feature'),
     prefix: '!',
     testServer: ['987015990644715620'],
   });

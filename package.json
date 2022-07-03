@@ -1,5 +1,5 @@
 {
-  "name": "bot_command_manager",
+  "name": "discord_bot",
   "version": "1.0.0",
   "description": "",
   "main": "index.ts",
@@ -10,7 +10,8 @@
   "author": "keleleo",
   "license": "ISC",
   "dependencies": {
-    "discord.js": "^13.8.0",
+    "dbc": "file:../discord-bot-core",
+    "discord.js": "^13.8.1",
     "dotenv": "^16.0.1",
     "path": "^0.12.7"
   },

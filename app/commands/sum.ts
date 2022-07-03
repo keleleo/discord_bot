@@ -1,5 +1,5 @@
+import { ICommand } from 'dbc';
 import { Constants } from 'discord.js';
-import { ICommand } from '../../core/models/ICommand';
 export default {
   name: 'sum',
   category: 'math',
@@ -21,6 +21,7 @@ export default {
       type: Constants.ApplicationCommandOptionTypes.NUMBER,
     },
   ],
+
   callback: ({ interaction, options }) => {
     const n1 = interaction.options.getNumber('num1');
     const n2 = interaction.options.getNumber('num2');

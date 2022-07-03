@@ -1,10 +1,10 @@
-import { ICommand } from '../../core/models/ICommand';
+import { ICommand } from 'dbc';
 
 var num = 0;
 export default {
   name: 'add',
   category: 'test',
-  description: 'Response with pong',
+  description: 'Response with result',
 
   slash: 'both',
   callback: ({ message, user }) => {
