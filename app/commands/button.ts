@@ -1,37 +1,76 @@
+import { ButtonInteraction, MessageActionRow, MessageButton } from 'discord.js';
 import { ICommand } from 'dbc';
-import { MessageActionRow, MessageButton } from 'discord.js';
 
 export default {
-  name: 'button',
-  category: 'Testing',
-  description: 'Testing',
+  name: 'Button',
+  category: 'test',
+  description: 'Button example',
 
   slash: true,
-  testOnly: true,
 
-  callback: async ({ interaction: msgInt, channel, member }) => {
+  callback: async ({ interaction: msgInt, channel }) => {
     const row = new MessageActionRow()
       .addComponents(
         new MessageButton()
-          .setCustomId('ban_yes')
-          .setEmoji('❤️')
-          .setLabel('Confirm')
+          .setCustomId('btn_potato')
+          .setEmoji('🥔')
+          .setLabel('Potato')
           .setStyle('SUCCESS')
       )
       .addComponents(
         new MessageButton()
-          .setCustomId('ban_no')
-          .setLabel('Cancel')
+          .setCustomId('btn_banana')
+          .setEmoji('🍌')
+          .setLabel('Banana')
           .setStyle('DANGER')
       );
-    const linkRow = new MessageActionRow();
-    await msgInt.reply({
-      content: 'Are you sure?',
-      components: [row],
+
+    const link = new MessageActionRow().addComponents(
+      new MessageButton()
+        .setURL('https://github.com/keleleo')
+        .setLabel('github')
+        .setStyle('LINK')
+    );
+
+    const filter = () => {
+      return true;
+    };
+
+    const collector = channel.createMessageComponentCollector({
+      filter,
+      max: 1,
+      time: 1000 * 25,
     });
-    console.log(member != null);
-    member?.roles.cache.forEach((element) => {
-      console.log(element.name);
+
+    collector.on('collect', (btnI: ButtonInteraction) => {
+      const content = `Selected: ${
+        btnI.customId === 'btn_banana' ? 'Banana' : 'Potato'
+      }`;
+      btnI.reply({ content, ephemeral: true });
     });
+
+    collector.on('end', (collection) => {
+      if (collection.first()?.customId === 'btn_banana') {
+        msgInt.editReply({
+          content: `🍌🍌🍌`,
+          components: [],
+        });
+      } else if (collection.first()?.customId === 'btn_potato') {
+        msgInt.editReply({
+          content: `🥔🥔🥔`,
+          components: [],
+        });
+      }
+    });
+
+    if (msgInt) {
+      msgInt.reply({
+        content: 'button working',
+        components: [row, link],
+        ephemeral: true,
+      });
+      return;
+    }
+    return 'button working';
   },
 } as ICommand;

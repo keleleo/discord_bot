@@ -3,6 +3,8 @@ import { Client, Intents } from 'discord.js';
 import dotenv from 'dotenv';
 import path from 'path';
 
+import { Example } from './app/classes/Example';
+
 dotenv.config();
 
 const client = new Client({
@@ -20,12 +22,17 @@ const client = new Client({
 });
 
 client.on('ready', () => {
-  new BotController(client, {
-    comandsDir: path.join(__dirname, './app/commands'),
-    featuresDir: path.join(__dirname, './app/feature'),
+  const exampleClass = new Example();
+  const serverTest = process.env.SERVER_TEST || ''
+  new BotController<Example>(client, {
     prefix: '!',
-    testServer: ['987015990644715620'],
+    commandsDir: path.join(__dirname, '/app/commands'),
+    testServer: [serverTest],
+    ignoreBots: true,
+    custom: exampleClass
   });
+
+  console.log('Running');
 });
 
 client.login(process.env.TOKEN);
