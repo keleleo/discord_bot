@@ -1,14 +1,11 @@
 import { ICommand } from 'dbc';
-
 export default {
   name: 'ping',
+  description: 'response with pong',
 
-  category: 'test',
-  description: 'Response with pong',
-
-  slash: 'both',
-  testOnly: false,
-  callback: async ({ user, member }) => {
-    return user.username;
+  slash:'both',
+  testOnly:true,
+  callback: () => {
+    return 'pong';
   },
 } as ICommand;
